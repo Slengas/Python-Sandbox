@@ -13,7 +13,8 @@ def get_translation(w):
     else:
         return "The word is not in a dictionary."
 
+
 word = input("Enter a word: ")
 
 print(get_translation(word))
-print("Additional information")
+print("Additional information 23 ")
