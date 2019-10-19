@@ -16,3 +16,4 @@ def get_translation(w):
 word = input("Enter a word: ")
 
 print(get_translation(word))
+print("Additional information")
