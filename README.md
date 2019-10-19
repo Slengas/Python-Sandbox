@@ -1,4 +1,4 @@
-##Project 1: Translator
+## Project 1: Translator
 
-####Thesaurus project
+#### Thesaurus project
 Enter a word and get a definition.
