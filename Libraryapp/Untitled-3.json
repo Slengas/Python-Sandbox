@@ -1,0 +1,16 @@
+{
+  "stmt": "SELECT * FROM `book`;",
+  "header": ["id", "title", "author", "year", "isbn"],
+  "rows": [
+    ["1", "Tools of Titans", "Tim Ferris", "2014", "12345678"],
+    ["2", "Eat that Frog", "Brian Tracy", "1994", "12349999"],
+    ["3", "Eat that Frog", "Brian Tracy", "1994", "12349999"],
+    ["4", "Eat that Frog", "Brian Tracy", "1994", "12349999"],
+    ["5", "Awaiken the Giant within", "Anthony Robbins", "1980", "14343412341"],
+    ["6", "Eat that Frog", "Brian Tracy", "1994", "12349999"],
+    ["7", "", "", "", ""],
+    ["8", "My book", "Tomas Rimkus", "2019", "134344213"],
+    ["9", "Eat that Frog", "Brian Tracy", "1994", "12349999"],
+    ["10", "My second book", "Tomas R.", "2020", "13431"]
+  ]
+}

@@ -1,59 +1,44 @@
 import sqlite3
 
 
-def connect():
-    conn = sqlite3.connect("books.db")
-    cur = conn.cursor()
-    cur.execute(
-        "CREATE TABLE IF NOT EXISTS book (id INTEGER PRIMARY KEY, title text, author text, year integer, isbn integer)")
-    conn.commit()
-    conn.close()
+class Database:
 
+    def __init__(self, db):
+        self.conn = sqlite3.connect(db)
+        self.cur = self.conn.cursor()
+        self.cur.execute("CREATE TABLE IF NOT EXISTS book (id INTEGER PRIMARY KEY, title TEXT, "
+                         "author TEXT, year INTEGER, isbn INTEGER)")
+        self.conn.commit()
 
-def insert(title, author, year, isbn):
-    conn = sqlite3.connect("books.db")
-    cur = conn.cursor()
-    cur.execute("INSERT INTO book VALUES (NULL,?,?,?,?)",
-                (title, author, year, isbn))
-    conn.commit()
-    conn.close()
+    def insert(self, title, author, year, isbn):
+        # the NULL parameter is for the auto-incremented id
+        self.cur.execute("INSERT INTO book VALUES(NULL,?,?,?,?)",
+                         (title, author, year, isbn))
+        self.conn.commit()
 
+    def view(self):
+        self.cur.execute("SELECT * FROM book")
+        rows = self.cur.fetchall()
+        return rows
 
-def view():
-    conn = sqlite3.connect("books.db")
-    cur = conn.cursor()
-    cur.execute("SELECT * FROM book")
-    rows = cur.fetchall()
-    conn.close()
-    return rows
+    def search(self, title="", author="", year="", isbn=""):
+        self.cur.execute("SELECT * FROM book WHERE title = ? OR author = ? OR year = ? "
+                         "OR isbn = ?", (title, author, year, isbn))
+        rows = self.cur.fetchall()
+        return rows
 
+    def delete(self, id):
+        self.cur.execute("DELETE FROM book WHERE id = ?", (id,))
+        self.conn.commit()
 
-def search(title="", author="", year="", isbn=""):
-    conn = sqlite3.connect("books.db")
-    cur = conn.cursor()
-    cur.execute("SELECT * FROM book WHERE title=? OR author=? OR year=? OR isbn=?",
-                (title, author, year, isbn))
-    rows = cur.fetchall()
-    conn.close()
-    return rows
+    def update(self, id, title, author, year, isbn):
+        self.cur.execute("UPDATE book SET title = ?, author = ?, year = ?, isbn = ? WHERE id = ?",
+                         (title, author, year, isbn, id))
+        self.conn.commit()
 
+    def __del__(self):
+        self.conn.close()
 
-def delete(id):
-    conn = sqlite3.connect("books.db")
-    cur = conn.cursor()
-    cur.execute("DELETE FROM book WHERE id=?", (id,))
-    conn.commit()
-    conn.close()
-
-
-def update(id, title, author, year, isbn):
-    conn = sqlite3.connect("books.db")
-    cur = conn.cursor()
-    cur.execute("UPDATE book SET title=?, author=?, year=?, isbn=? WHERE id=?",
-                (id, title, author, year, isbn))
-    conn.commit()
-    conn.close()
-
-
-connect()
-insert("Eat that Frog", "Brian Tracy", 1994, 12349999)
+    #insert("another novel", "James W.", 2017, 1234)
+    #update(2, title = "new book", author= "DH", year= 2005, isbn= 5555)
+    # print(view())
