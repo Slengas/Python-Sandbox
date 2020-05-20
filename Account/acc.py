@@ -22,6 +22,12 @@ class Account:
             file.write(str(self.balance))
 
 
+class Checking(Account):
+
+    def __init__(self, filepath):
+        Account.__init__(self, filepath)
+
+
 account = Account("balance.txt")
 print(account.balance)
 
@@ -33,4 +39,10 @@ else:
     print("Enter d for deposit or w for withdraw")
 
 print(account.balance)
+
+checking = Checking("balance.txt")
+checking.deposit(199)
+
+print(checking.balance)
 account.commit()
+checking.commit()
